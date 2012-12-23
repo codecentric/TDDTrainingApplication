@@ -1,9 +1,7 @@
 package nl.codecentric.training.tdd.service.impl;
 
-import nl.codecentric.training.tdd.exception.ExceedsMaxTriangleSideException;
-import nl.codecentric.training.tdd.exception.NegativeNumberException;
-import nl.codecentric.training.tdd.exception.NotNumericException;
-import nl.codecentric.training.tdd.exception.ZeroNumberException;
+import nl.codecentric.training.tdd.exception.*;
+import nl.codecentric.training.tdd.model.TriangleType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,4 +71,38 @@ public class TriangleCalculatorServiceBeanTest {
     public void testTriangleSideEmpty(){
         triangleCalculatorServiceBean.validateTriangleSide(triangleSideEmpty);
     }
+
+    @Test(expected = IncorrectTriangleSidesException.class)
+    public void testInvalidTriangleSides1(){
+        triangleCalculatorServiceBean.calculateTriangleType("2","4","6");
+    }
+
+    @Test(expected = IncorrectTriangleSidesException.class)
+    public void testInvalidTriangleSides2(){
+        triangleCalculatorServiceBean.calculateTriangleType("2","8","6");
+    }
+
+    @Test(expected = IncorrectTriangleSidesException.class)
+    public void testInvalidTriangleSides3(){
+        triangleCalculatorServiceBean.calculateTriangleType("9","4","5");
+    }
+
+    @Test
+    public void testDetermineTriangleTypeEQUILATERAL(){
+         Assert.assertThat("A triangle with 3 equal sides is equilateral",triangleCalculatorServiceBean.determineTriangleType(2,2,2),equalTo(TriangleType.EQUILATERAL));
+    }
+
+    @Test
+    public void testDetermineTriangleTypeISOSCELES(){
+         Assert.assertThat("A triangle with 2 equal sides is isoceles",triangleCalculatorServiceBean.determineTriangleType(2,2,8),equalTo(TriangleType.ISOSCELES));
+         Assert.assertThat("A triangle with 2 equal sides is isoceles",triangleCalculatorServiceBean.determineTriangleType(2,8,2),equalTo(TriangleType.ISOSCELES));
+         Assert.assertThat("A triangle with 2 equal sides is isoceles",triangleCalculatorServiceBean.determineTriangleType(8,2,2),equalTo(TriangleType.ISOSCELES));
+    }
+
+    @Test
+    public void testDetermineTriangleTypeSCALENEL(){
+        Assert.assertThat("A triangle with 3 different sides is scalenel",triangleCalculatorServiceBean.determineTriangleType(2,5,4),equalTo(TriangleType.SCALENE));
+    }
+
+
 }

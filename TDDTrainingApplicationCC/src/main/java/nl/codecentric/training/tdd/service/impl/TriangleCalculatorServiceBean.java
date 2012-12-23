@@ -1,9 +1,6 @@
 package nl.codecentric.training.tdd.service.impl;
 
-import nl.codecentric.training.tdd.exception.ExceedsMaxTriangleSideException;
-import nl.codecentric.training.tdd.exception.NegativeNumberException;
-import nl.codecentric.training.tdd.exception.NotNumericException;
-import nl.codecentric.training.tdd.exception.ZeroNumberException;
+import nl.codecentric.training.tdd.exception.*;
 import nl.codecentric.training.tdd.model.TriangleType;
 import nl.codecentric.training.tdd.service.TriangleCalculatorService;
 
@@ -30,6 +27,16 @@ public class TriangleCalculatorServiceBean implements TriangleCalculatorService 
         Integer triangleSide2 = Integer.valueOf(inputTriangleSide2,10);
         Integer triangleSide3 = Integer.valueOf(inputTriangleSide3,10);
 
+        validateIfSumOfTwoIsNotEqualToThird(triangleSide1,triangleSide2,triangleSide3);
+        return determineTriangleType(triangleSide1,triangleSide2,triangleSide3);
+    }
+
+    protected TriangleType determineTriangleType(Integer triangleSide1, Integer triangleSide2, Integer triangleSide3){
+        if(triangleSide1 == triangleSide2 && triangleSide2 == triangleSide3){
+            return TriangleType.EQUILATERAL;
+        }else if(triangleSide1 == triangleSide2 || triangleSide1 == triangleSide3 || triangleSide2 == triangleSide3){
+            return TriangleType.ISOSCELES;
+        }
         return TriangleType.SCALENE;
     }
 
@@ -72,7 +79,18 @@ public class TriangleCalculatorServiceBean implements TriangleCalculatorService 
         }
     }
 
-    private void validateIfSumOfTwoIsNotEqualThird(Integer triangleSide1,Integer triangleSide2, Integer triangleSide3){
+    private void validateIfSumOfTwoIsNotEqualToThird(Integer triangleSide1, Integer triangleSide2, Integer triangleSide3){
+        validateTriangleSum(triangleSide1, triangleSide2, triangleSide3);
+        validateTriangleSum(triangleSide1, triangleSide3, triangleSide2);
+        validateTriangleSum(triangleSide2, triangleSide3, triangleSide1);
     }
+
+    private void validateTriangleSum(Integer triangleSide1, Integer triangleSide2, Integer triangleSide3){
+        if((triangleSide1+triangleSide2)==triangleSide3){
+            throw new IncorrectTriangleSidesException("The sum of two triangle side cannot be the sum of the third triangle side.");
+        }
+    }
+
+
 
 }
