@@ -1,0 +1,6 @@
+# IntelliJ ignores
+.idea
+*.iml
+
+# build dirs
+target
