@@ -2,6 +2,7 @@ package nl.codecentric.training.tdd.web.form;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * User: Hylke Stapersma
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Setter
 public class TriangleForm {
 
-    private Integer triangleSide1,triangleSide2,triangleSide3;
+    @NotEmpty
+    private String triangleSide1,triangleSide2,triangleSide3;
 
 }

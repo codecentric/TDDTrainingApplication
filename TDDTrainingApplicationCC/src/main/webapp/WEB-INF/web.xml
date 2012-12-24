@@ -6,10 +6,27 @@
 
     <display-name>codecentric TDD Training application (based on Myers triangles)</display-name>
 
-    <env-entry>
-        <description>The following defects can be introduced (unit,integration,functional)</description>
-        <env-entry-name>defects</env-entry-name>
-        <env-entry-value>unit,integration,functional</env-entry-value>
-    </env-entry>
+    <!-- Spring configuration -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
 </web-app>

@@ -2,18 +2,18 @@ package nl.codecentric.training.tdd.web;
 
 import lombok.Getter;
 import lombok.Setter;
-import nl.codecentric.training.tdd.exception.ExceedsMaxTriangleSideException;
-import nl.codecentric.training.tdd.exception.NegativeNumberException;
-import nl.codecentric.training.tdd.exception.NotNumericException;
-import nl.codecentric.training.tdd.exception.ZeroNumberException;
+import nl.codecentric.training.tdd.service.TriangleCalculatorService;
 import nl.codecentric.training.tdd.web.form.TriangleForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.regex.Pattern;
+import javax.validation.Valid;
 
-@Controller
 @RequestMapping("/triangle")
 public class TriangleController {
 
@@ -22,13 +22,31 @@ public class TriangleController {
     @Setter
     private String triangleSide1,triangleSide2,triangleSide3;
 
-    @Autowired
-    public TriangleController(){
+    @Getter
+    private final TriangleCalculatorService triangleCalculatorService;
 
+    @Autowired
+    public TriangleController(TriangleCalculatorService triangleCalculatorService){
+        this.triangleCalculatorService = triangleCalculatorService;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String get(Model model){
+        model.addAttribute("triangleForm",getTriangleForm());
+        return "triangle/index";
     }
 
     public TriangleForm getTriangleForm() {
         return new TriangleForm();
+    }
+
+    @RequestMapping(value = "/calculate",method = RequestMethod.POST)
+    public String calculate(@ModelAttribute("triangleForm") @Valid TriangleForm triangleForm, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+           return "triangle/calculate";
+        }
+        triangleCalculatorService.calculateTriangleType(triangleForm.getTriangleSide1(),triangleForm.getTriangleSide2(),triangleForm.getTriangleSide3());
+        return "redirect:/triangle";
     }
 
 
