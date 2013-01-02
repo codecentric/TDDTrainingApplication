@@ -13,6 +13,11 @@
         <developmentPhase>development</developmentPhase>
         <spring.version>3.0.7.RELEASE</spring.version>
         <jetty.version>7.6.4.v20120524</jetty.version>
+        <thucydides.version>0.9.90</thucydides.version>
+        <thucydides.port>38080</thucydides.port>
+        <thucydides.only.save.failing.screenshots>true</thucydides.only.save.failing.screenshots>
+        <webdriver.base.url>http://localhost:${thucydides.port}/account</webdriver.base.url>
+        <webdriver.driver>firefox</webdriver.driver>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -104,6 +109,20 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Thucydides -->
+        <dependency>
+            <groupId>net.thucydides</groupId>
+            <artifactId>thucydides-core</artifactId>
+            <version>${thucydides.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.thucydides</groupId>
+            <artifactId>thucydides-junit</artifactId>
+            <version>${thucydides.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
