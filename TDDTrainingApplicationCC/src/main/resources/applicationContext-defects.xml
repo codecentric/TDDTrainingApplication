@@ -11,7 +11,7 @@
 
 
 
-    <bean class="nl.codecentric.training.tdd.service.impl.TriangleCalculatorServiceBean" id="triangleCalculatorService" />
+    <bean class="nl.codecentric.training.tdd.service.impl.TriangleCalculatorServiceDevelopmentBean" id="triangleCalculatorService" />
 
 
 </beans>

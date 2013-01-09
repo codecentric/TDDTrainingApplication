@@ -4,3 +4,5 @@
 
 # build dirs
 target
+
+.DS_Store

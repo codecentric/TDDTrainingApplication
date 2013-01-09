@@ -11,6 +11,7 @@
     <properties>
         <!-- The following development phases could be chosen (development,integration,acceptance,production) -->
         <developmentPhase>development</developmentPhase>
+        <functionalEnabled>true</functionalEnabled>
         <spring.version>3.0.7.RELEASE</spring.version>
         <jetty.version>7.6.4.v20120524</jetty.version>
         <thucydides.version>0.9.90</thucydides.version>
@@ -132,8 +133,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
@@ -149,7 +150,6 @@
                         <contextPath>/</contextPath>
                         <resourceBases>
                             <resourceBase>${basedir}/src/main/webapp</resourceBase>
-                            <resourceBase>${project.build.directory}/${project.build.finalName}</resourceBase>
                         </resourceBases>
                         <sessionHandler implementation="org.eclipse.jetty.server.session.SessionHandler">
                             <sessionManager implementation="org.eclipse.jetty.server.session.HashSessionManager">
@@ -162,6 +162,10 @@
                         <systemProperty implementation="org.mortbay.jetty.plugin.SystemProperty">
                             <name>developmentPhase</name>
                             <value>${developmentPhase}</value>
+                        </systemProperty>
+                        <systemProperty implementation="org.mortbay.jetty.plugin.SystemProperty">
+                            <name>functionalEnabled</name>
+                            <value>${functionalEnabled}</value>
                         </systemProperty>
                     </systemProperties>
                 </configuration>

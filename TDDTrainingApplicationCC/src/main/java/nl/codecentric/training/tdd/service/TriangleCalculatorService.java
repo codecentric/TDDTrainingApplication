@@ -10,6 +10,6 @@ import nl.codecentric.training.tdd.model.TriangleType;
  */
 public interface TriangleCalculatorService {
 
-   public TriangleType calculateTriangleType(String triangleSide1, String triangleSide2, String triangleSide3);
+    public TriangleType calculateTriangleType(String triangleSide1, String triangleSide2, String triangleSide3);
 
 }

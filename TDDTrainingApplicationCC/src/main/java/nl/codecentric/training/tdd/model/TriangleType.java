@@ -10,4 +10,8 @@ public enum TriangleType {
     EQUILATERAL,
     ISOSCELES,
     SCALENE;
+
+    public String getName(){
+        return name();
+    }
 }
