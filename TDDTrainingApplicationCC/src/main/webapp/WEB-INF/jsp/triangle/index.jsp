@@ -12,7 +12,7 @@
 
     <body>
         <h2>TDD Training application</h2>
-        <form:form method="post" action="/triangle/calculate" commandName="triangleForm">
+        <form:form method="post" action="${pageContext.request.contextPath}/triangle/calculate" commandName="triangleForm">
 
             <div>
                 <form:label path="triangleSide1">Triangle side 1</form:label>

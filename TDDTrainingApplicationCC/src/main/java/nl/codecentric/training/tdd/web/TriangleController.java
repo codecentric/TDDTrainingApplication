@@ -59,7 +59,7 @@ public class TriangleController {
     @RequestMapping(value = "/calculate", method = RequestMethod.POST)
     public ModelAndView calculate(@ModelAttribute("triangleForm") @Valid TriangleForm triangleForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()||!isFunctionalEnabled()) {
-            return new ModelAndView("triangle/index)");
+            return new ModelAndView("triangle/index");
         }
         triangleType = triangleCalculatorService.calculateTriangleType(triangleForm.getTriangleSide1(), triangleForm.getTriangleSide2(), triangleForm.getTriangleSide3());
         return new ModelAndView("redirect:/triangle/success");

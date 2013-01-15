@@ -10,7 +10,7 @@
 
     <bean class="nl.codecentric.training.tdd.web.TriangleController">
         <constructor-arg ref="triangleCalculatorService"/>
-        <property name="functionalEnabled" value="#{systemProperties['functionalEnabled']}" />
+        <property name="functionalEnabled" value="#{systemProperties['contextParam_functionalEnabled']}" />
     </bean>
 
     <bean id="viewResolver"

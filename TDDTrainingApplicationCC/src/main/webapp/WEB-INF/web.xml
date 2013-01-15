@@ -12,6 +12,23 @@
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
+    <!--
+    <context-param>
+        <param-name>phase</param-name>
+        <param-value>development</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>functionalEnabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    -->
+
+    <listener>
+        <listener-class>nl.codecentric.training.tdd.web.listener.CopyWebContextParamsListener</listener-class>
+    </listener>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>

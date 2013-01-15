@@ -9,7 +9,7 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 
-    <import resource="classpath:applicationContext-${developmentPhase}.xml"/>
+    <import resource="classpath:applicationContext-${contextParam_phase}.xml"/>
 
 
 
