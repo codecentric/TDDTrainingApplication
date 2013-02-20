@@ -43,13 +43,13 @@ public class TriangleCalculationSuccessStory {
     @Test
     @Title("Test triangle type ISOSCELES")
     public void testNonNumericInputSide2() {
-        fillInTriangleCalculationForm("2", "5", "2", TriangleType.ISOSCELES);
+        fillInTriangleCalculationForm("2", "3", "2", TriangleType.ISOSCELES);
     }
 
     @Test
     @Title("Test triangle type SCALENE")
     public void testNonNumericInputSide3() {
-        fillInTriangleCalculationForm("2", "5", "4", TriangleType.SCALENE);
+        fillInTriangleCalculationForm("2", "3", "4", TriangleType.SCALENE);
     }
 
     private void fillInTriangleCalculationForm(String side1, String side2, String side3, TriangleType triangleType) {

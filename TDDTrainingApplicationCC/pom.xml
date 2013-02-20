@@ -14,7 +14,7 @@
         <functionalEnabled>true</functionalEnabled>
         <spring.version>3.0.7.RELEASE</spring.version>
         <jetty.version>7.6.4.v20120524</jetty.version>
-        <thucydides.version>0.9.90</thucydides.version>
+        <thucydides.version>0.9.98</thucydides.version>
         <thucydides.port>38080</thucydides.port>
         <thucydides.only.save.failing.screenshots>true</thucydides.only.save.failing.screenshots>
         <webdriver.base.url>http://localhost:${thucydides.port}/account</webdriver.base.url>

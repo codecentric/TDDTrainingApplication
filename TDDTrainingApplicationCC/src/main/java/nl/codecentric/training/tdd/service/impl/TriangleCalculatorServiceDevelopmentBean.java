@@ -29,7 +29,7 @@ public class TriangleCalculatorServiceDevelopmentBean implements TriangleCalcula
         Integer triangleSide2 = Integer.valueOf(inputTriangleSide2,10);
         Integer triangleSide3 = Integer.valueOf(inputTriangleSide3,10);
 
-        validateIfSumOfTwoIsNotEqualToThird(triangleSide1,triangleSide2,triangleSide3);
+        validateIfSumOfTwoIsNotEqualOrGreaterThanThird(triangleSide1, triangleSide2, triangleSide3);
         return determineTriangleType(triangleSide1,triangleSide2,triangleSide3);
     }
 
@@ -82,14 +82,14 @@ public class TriangleCalculatorServiceDevelopmentBean implements TriangleCalcula
         }
     }
 
-    private void validateIfSumOfTwoIsNotEqualToThird(Integer triangleSide1, Integer triangleSide2, Integer triangleSide3){
+    private void validateIfSumOfTwoIsNotEqualOrGreaterThanThird(Integer triangleSide1, Integer triangleSide2, Integer triangleSide3){
         validateTriangleSum(triangleSide1, triangleSide2, triangleSide3);
         validateTriangleSum(triangleSide1, triangleSide3, triangleSide2);
         validateTriangleSum(triangleSide2, triangleSide3, triangleSide1);
     }
 
     private void validateTriangleSum(Integer triangleSide1, Integer triangleSide2, Integer triangleSide3){
-        if((triangleSide1-triangleSide2)==triangleSide3){
+        if((triangleSide1-triangleSide2)<triangleSide3){
             throw new IncorrectTriangleSidesException("The sum of two triangle side cannot be the sum of the third triangle side.");
         }
     }
