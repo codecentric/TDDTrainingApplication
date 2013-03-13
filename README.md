@@ -6,7 +6,7 @@ The TDD training application is based on the Weinberg-Myers triangle program [ex
 
 The following application must be install for running the TDD Training application
 
-* jkd 1.6+
+* [jdk 1.6+](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [maven 3](http://maven.apache.org/)
 
 ## First run
