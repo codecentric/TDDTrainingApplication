@@ -27,4 +27,8 @@ The test that are already in the application available can be run with the follo
 
 `mvn verify`
 
-This will run thucydides junit and thucydides jbehave tests.
+This will run thucydides junit and thucydides jbehave tests. A Thucydides report can be generated with the following command.
+
+`mvn thucydides:aggregate`
+
+The report will be available in the `target/site/thucydides` directory.
