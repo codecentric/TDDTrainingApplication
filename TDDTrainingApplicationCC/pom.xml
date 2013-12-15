@@ -14,11 +14,11 @@
         <functionalEnabled>true</functionalEnabled>
         <spring.version>3.0.7.RELEASE</spring.version>
         <jetty.version>7.6.4.v20120524</jetty.version>
-        <thucydides.version>0.9.104</thucydides.version>
+        <thucydides.version>0.9.125</thucydides.version>
         <thucydides.port>38080</thucydides.port>
         <thucydides.only.save.failing.screenshots>true</thucydides.only.save.failing.screenshots>
         <webdriver.base.url>http://localhost:${thucydides.port}/account</webdriver.base.url>
-        <webdriver.driver>firefox</webdriver.driver>
+        <webdriver.driver>htmlunit</webdriver.driver>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -135,7 +135,26 @@
     <build>
         <finalName>TDDTrainingApplicationCC</finalName>
         <plugins>
-            <plugin>
+ 	  <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <formats>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>cobertura</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> 
+
+           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
