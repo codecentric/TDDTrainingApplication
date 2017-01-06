@@ -6,7 +6,7 @@ The TDD training application is based on the Weinberg-Myers triangle program [ex
 
 The following application must be install for running the TDD Training application
 
-* [jdk 1.6+](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [jdk 1.8+](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [maven 3](http://maven.apache.org/)
 
 ## First run
@@ -25,7 +25,7 @@ The application can be run with the following command
 
 The test that are already in the application available can be run with the following command
 
-`mvn verify`
+`mvn verify -Pintegration`
 
 This will run thucydides junit and thucydides jbehave tests. A Thucydides report can be generated with the following command.
 
