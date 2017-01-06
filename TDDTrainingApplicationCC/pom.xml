@@ -14,10 +14,11 @@
         <functionalEnabled>true</functionalEnabled>
         <spring.version>3.0.7.RELEASE</spring.version>
         <jetty.version>7.6.4.v20120524</jetty.version>
-        <thucydides.version>0.9.233</thucydides.version>
-        <thucydides.port>38080</thucydides.port>
-        <thucydides.only.save.failing.screenshots>true</thucydides.only.save.failing.screenshots>
-        <webdriver.base.url>http://localhost:${thucydides.port}/account</webdriver.base.url>
+        <serenity.version>1.0.47</serenity.version>
+        <serenity-jbehave.version>1.0.21</serenity-jbehave.version>
+        <serenity.maven.version>1.0.47</serenity.maven.version>
+        <selenium-server.version>2.53.1</selenium-server.version>
+        <webdriver.base.url>http://localhost:8080/triangle</webdriver.base.url>
         <webdriver.driver>firefox</webdriver.driver>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -112,21 +113,41 @@
 
         <!-- Thucydides -->
         <dependency>
-            <groupId>net.thucydides</groupId>
-            <artifactId>thucydides-core</artifactId>
-            <version>${thucydides.version}</version>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>core</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-server</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Dependencies manually included because we need a later Selenium version to work with Firefox -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>${selenium-server.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>net.thucydides</groupId>
-            <artifactId>thucydides-junit</artifactId>
-            <version>${thucydides.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-exec</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- end of manually included dependencies -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit</artifactId>
+            <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>net.thucydides</groupId>
-            <artifactId>thucydides-jbehave-plugin</artifactId>
-            <version>${thucydides.version}</version>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-jbehave</artifactId>
+            <version>${serenity-jbehave.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -268,12 +289,19 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>net.thucydides.maven.plugins</groupId>
-                        <artifactId>maven-thucydides-plugin</artifactId>
-                        <version>${thucydides.version}</version>
+                        <groupId>net.serenity-bdd.maven.plugins</groupId>
+                        <artifactId>serenity-maven-plugin</artifactId>
+                        <version>${serenity.maven.version}</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>net.serenity-bdd</groupId>
+                                <artifactId>core</artifactId>
+                                <version>${serenity.version}</version>
+                            </dependency>
+                        </dependencies>
                         <executions>
                             <execution>
-                                <id>Run-thucydides-report</id>
+                                <id>serenity-reports</id>
                                 <phase>post-integration-test</phase>
                                 <goals>
                                     <goal>aggregate</goal>
