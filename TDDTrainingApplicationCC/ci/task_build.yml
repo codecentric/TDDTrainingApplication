@@ -6,9 +6,9 @@ image_resource:
   source: {repository: maven, tag: "3-jdk-8"}
 
 inputs:
-  - name: TDDTrainingApplicationCC
+  - name: resource-TDD-Training-Application
 
 run:
   path: mvn
-  dir: TDDTrainingApplicationCC
+  dir: resource-TDD-Training-Application/TDDTrainingApplicationCC
   args: ["install"]

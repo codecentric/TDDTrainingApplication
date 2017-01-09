@@ -1,0 +1,14 @@
+---
+resources:
+- name: resource-TDD-Training-Application
+  type: git
+  source:
+    uri: https://github.com/codecentric/TDDTrainingApplication.git
+    branch: concourse-solution
+
+jobs:
+- name: job-build-application
+  plan:
+  - get: resource-TDD-Training-Application
+  - task: unit
+    file: resource-TDD-Training-Application/TDDTrainingApplicationCC/ci/task_build.yml
