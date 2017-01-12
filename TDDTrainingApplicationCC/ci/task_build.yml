@@ -8,10 +8,6 @@ image_resource:
 inputs:
   - name: resource-TDD-Training-Application
 
-outputs:
-  - name: dist
-  - path: resource-TDD-Training-Application/TDDTrainingApplicationCC/target
-
 run:
   path: mvn
   dir: resource-TDD-Training-Application/TDDTrainingApplicationCC
