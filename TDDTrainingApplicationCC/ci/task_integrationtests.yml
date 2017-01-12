@@ -10,5 +10,6 @@ inputs:
 
 run:
   path: xvfb-daemon-run
+  user: root
   dir: resource-TDD-Training-Application/TDDTrainingApplicationCC
   args: ["mvn", "verify", "-Pintegration"]
