@@ -29,5 +29,6 @@ jobs:
       - name: resource-TDD-Training-Application
       run:
         path: ./resource-TDD-Training-Application/TDDTrainingApplicationCC/ci/update_permissions.sh
+        user: root
   - task: unit
     file: resource-TDD-Training-Application/TDDTrainingApplicationCC/ci/task_integrationtests.yml
