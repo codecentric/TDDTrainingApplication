@@ -8,7 +8,16 @@ resources:
 
 jobs:
 - name: job-build-application
+  serial: true
   plan:
   - get: resource-TDD-Training-Application
   - task: unit
     file: resource-TDD-Training-Application/TDDTrainingApplicationCC/ci/task_build.yml
+
+- name: job-integrationtest-application
+  plan:
+  - get: resource-TDD-Training-Application
+    passed: [job-build-application]
+    trigger: true
+  - task: unit
+    file: resource-TDD-Training-Application/TDDTrainingApplicationCC/ci/task_integrationtests.yml

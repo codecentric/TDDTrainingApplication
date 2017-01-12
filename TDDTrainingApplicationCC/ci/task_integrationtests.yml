@@ -6,9 +6,9 @@ image_resource:
   source: {repository: khozzy/selenium-java-firefox, tag: "latest"}
 
 inputs:
-  - name: TDDTrainingApplicationCC
+  - name: resource-TDD-Training-Application
 
 run:
   path: xvfb-daemon-run
-  dir: TDDTrainingApplicationCC
+  dir: resource-TDD-Training-Application/TDDTrainingApplicationCC
   args: ["mvn", "verify", "-Pintegration"]
