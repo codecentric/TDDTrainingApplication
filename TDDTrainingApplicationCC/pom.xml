@@ -21,6 +21,7 @@
         <webdriver.base.url>http://localhost:8080/triangle</webdriver.base.url>
         <webdriver.driver>firefox</webdriver.driver>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <surefire.argLine>-javaagent:${jacoco.agent.jar}=destfile=${jacoco.report.path}</surefire.argLine>
     </properties>
 
     <dependencies>
@@ -156,7 +157,7 @@
     <build>
         <finalName>TDDTrainingApplicationCC</finalName>
         <plugins>
-           <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -166,12 +167,30 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <!-- no longer specifying 'argLine' for jacoco plugin ... -->
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <!-- ... instead the arg line is configured explicitly for surefire plugin. -->
+                    <argLine>${argLine}</argLine>
                 </configuration>
             </plugin>
+
+
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
