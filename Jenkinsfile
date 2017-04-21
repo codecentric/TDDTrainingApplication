@@ -12,6 +12,7 @@ node {
      env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
      sh 'java -version'
    }
+   // A minor change in the fole
    stage('Build') {
       // Move into directory
       dir('TDDTrainingApplicationCC') {
