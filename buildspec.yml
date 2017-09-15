@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - cd TDDTrainingApplicationCC
+      - echo Build started on `date`
+      - mvn test
+  post_build:
+    commands:
+      - cd TDDTrainingApplicationCC
+      - echo Build completed on `date`
+      - mvn package
+artifacts:
+  files:
+    - TDDTrainingApplicationCC/target/TDDTrainingApplicationCC.war

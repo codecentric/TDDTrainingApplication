@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  AWS code pipeline / code deploy example
+Parameters:
+  SourceS3BucketName:
+    Description: S3 bucket name for project
+    Type: String
+    Default: 'tddtrainingapplication'
+  GitHubRepo:
+    Description: GitHub repo URL
+    Type: String
+    Default: 'https://github.com/codecentric/TDDTrainingApplication.git'
+  GitHubOwner:
+    Description: GitHub owner
+    Type: String
+  GitHubOauthToken:
+    Description: GitHub oauth
+    Type: String
+  GitBranch:
+    Description: Git branch
+    Type: String
+    Default: 'aws-deploy'
+
+Resources:
+
+ CodePipelineIAMRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: ['sts:AssumeRole']
+          Effect: Allow
+          Principal: {Service: [codepipeline.amazonaws.com]}
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CodePipelineAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                - 's3:*'
+                - 'cloudformation:*'
+                - 'iam:PassRole'
+                - 'lambda:*'
+                Effect: Allow
+                Resource: '*'
+
+ AppPipeline:
+    Type: "AWS::CodePipeline::Pipeline"
+    Properties:
+      RoleArn: !GetAtt [CodePipelineIAMRole, Arn]
+      Stages:
+        -
+          Name: Source
+          Actions:
+            -
+              Name: SourceAction
+              ActionTypeId:
+                Category: Source
+                Owner: ThirdParty
+                Version: 1
+                Provider: GitHub
+              OutputArtifacts:
+              - Name: TddTrainingApplicationSource
+              Configuration:
+                Owner: !Ref GitHubOwner
+                Repo: !Ref GitHubRepo
+                Branch: !Ref GitBranch
+                OAuthToken: !Ref GitHubOauthToken
+              RunOrder: 1
+        -
+          Name: Build
+          Actions:
+            -
+              Name: Build
+              InputArtifacts:
+                -
+                  Name: TddTrainingApplicationSource
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              OutputArtifacts:
+                -
+                  Name: TddTrainingApplicationSourceBuild
+              Configuration:
+                ProjectName: TDDTrainingApplication
+              RunOrder: 1
+
+      ArtifactStore:
+        Type: S3
+        Location: !Ref SourceS3BucketName
