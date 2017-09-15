@@ -8,7 +8,6 @@ phases:
       - mvn test
   post_build:
     commands:
-      - cd TDDTrainingApplicationCC
       - echo Build completed on `date`
       - mvn package
 artifacts:

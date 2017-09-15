@@ -9,7 +9,7 @@ Parameters:
   GitHubRepo:
     Description: GitHub repo URL
     Type: String
-    Default: 'https://github.com/codecentric/TDDTrainingApplication.git'
+    Default: 'TDDTrainingApplication'
   GitHubOwner:
     Description: GitHub owner
     Type: String
@@ -41,10 +41,42 @@ Resources:
               - Action:
                 - 's3:*'
                 - 'cloudformation:*'
+                - 'codebuild:*'
                 - 'iam:PassRole'
                 - 'lambda:*'
                 Effect: Allow
                 Resource: '*'
+
+ CodeBuildServiceRole:
+     Type: AWS::IAM::Role
+     Properties:
+       Path: /
+       AssumeRolePolicyDocument: |
+         {
+             "Statement": [{
+                 "Effect": "Allow",
+                 "Principal": { "Service": [ "codebuild.amazonaws.com" ]},
+                 "Action": [ "sts:AssumeRole" ]
+             }]
+         }
+       Policies:
+         - PolicyName: root
+           PolicyDocument:
+             Version: 2012-10-17
+             Statement:
+               - Resource: "*"
+                 Effect: Allow
+                 Action:
+                   - logs:CreateLogGroup
+                   - logs:CreateLogStream
+                   - logs:PutLogEvents
+                   - ecr:GetAuthorizationToken
+               - Resource: !Sub arn:aws:s3:::${SourceS3BucketName}/*
+                 Effect: Allow
+                 Action:
+                   - s3:GetObject
+                   - s3:PutObject
+                   - s3:GetObjectVersion
 
  AppPipeline:
     Type: "AWS::CodePipeline::Pipeline"
@@ -86,9 +118,27 @@ Resources:
                 -
                   Name: TddTrainingApplicationSourceBuild
               Configuration:
-                ProjectName: TDDTrainingApplication
+                ProjectName: !Ref TDDTrainingApplicationCodeBuild
               RunOrder: 1
 
       ArtifactStore:
         Type: S3
         Location: !Ref SourceS3BucketName
+
+ TDDTrainingApplicationCodeBuild:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: TDDTrainingApplication
+      Description: A description about my project
+      ServiceRole: !GetAtt [CodeBuildServiceRole, Arn]
+      Artifacts:
+        Location: !Ref SourceS3BucketName
+        Type: "S3"
+      Source:
+        Location: !Sub ${SourceS3BucketName}/source.zip
+        Type: "S3"
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/java:openjdk-8
+      TimeoutInMinutes: 10
